@@ -14,6 +14,16 @@
         </v-btn>
       </v-toolbar>
       <v-navigation-drawer v-model="drawer" app temporary hide-overlay class="primary">
+        <v-row>
+          <v-col align="center" class="mt-5">
+            <v-avatar size="100">
+              <img src="/jeff.JPG" alt="">
+            </v-avatar>
+            <p class="white--text subtitle-1 mt-1">
+              Web Developer
+            </p>
+          </v-col>
+        </v-row>
         <v-list>
           <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
             <v-list-item-icon>

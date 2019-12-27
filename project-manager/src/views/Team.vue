@@ -7,7 +7,9 @@
         <v-col cols="12" xs="12" sm="6" md="4" lg="3" v-for="(person, index) in team" :key="index">
           <v-card flat class="text-center ma-3">
             <v-responsive class="pt-4">
-              Image goes here
+               <v-avatar size="120">
+                 <img :src="person.avatar">
+               </v-avatar>
             </v-responsive>
             <v-card-text>
               <div class="subtitle-1">{{ person.name }}</div>
@@ -40,13 +42,14 @@ export default {
   data() {
     return{
       team: [
-        { name: 'Jeff', role: 'Web developer' },
-        { name: 'Emily', role: 'Content Director' },
-        { name: 'Zoe', role: 'Copy Writer' },
-        { name: 'Terry', role: 'Marketing Director' },
-        { name: 'Ben', role: 'Production Director'}
+        { name: 'Jeff', role: 'Web developer', avatar: '/jeff.JPG' },
+        { name: 'Emily', role: 'Content Director', avatar: '/emily.jpeg' },
+        { name: 'Zoe', role: 'Copy Writer', avatar: '/zoe.jpeg' },
+        { name: 'Terry', role: 'Marketing Director', avatar: '/terry.jpeg' },
+        { name: 'Benito', role: 'Production Director', avatar: '/benito.jpg' }
       ],
     }
   },
 }
 </script>
+

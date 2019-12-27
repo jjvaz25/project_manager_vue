@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Homepage</h1>
+    <h1>Dashboard</h1>
 
   </div>
 </template>
@@ -10,7 +10,7 @@
 
 
 export default {
-  name: 'home',
+  name: 'dashboard',
   components: {
 
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="popup text-center">
-    <v-dialog max-width="600px">
+    <v-dialog max-width="600px" v-model="dialogOpen">
       <template v-slot:activator="{ on }">
         <v-btn text dark class="success" v-on="on">
           Add new project
@@ -22,7 +22,7 @@
               <v-date-picker v-model="date" @input="menu2 = false"></v-date-picker>
             </v-menu>
 
-            <v-btn @click="submit" text class="success mx-0 mt-3">Add project</v-btn>
+            <v-btn @click="submit" text class="success mx-0 mt-3" :loading="loading"  >Add project</v-btn>
           </v-form>
         </v-card-text>
       </v-card>
@@ -45,12 +45,15 @@ export default {
       ],
       dateRules: [
         v => (v.length && v.length >=1) || 'The date field is required'
-      ]
+      ],
+      loading: false,
+      dialogOpen: false,
     }
   },
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
+        this.loading = true; 
         const project = {
           title: this.title,
           content: this.content,
@@ -60,7 +63,9 @@ export default {
         }
 
         db.collection('projects').add(project).then(() => {
-          console.log('added to database')
+          this.loading = false;
+          this.dialogOpen = false;
+          this.$emit('projectAdded')
         })
       }
     }

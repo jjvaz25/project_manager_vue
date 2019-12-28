@@ -11,11 +11,11 @@
           <h2>Add a new project</h2>
         </v-card-title>
         <v-card-text>
-          <v-form px-3>
-            <v-text-field label="Title" v-model="title" prepend-icon="folder"></v-text-field>
-            <v-textarea label="Information" v-model="content" prepend-icon="edit"></v-textarea>
+          <v-form px-3 ref="form">
+            <v-text-field label="Title" v-model="title" prepend-icon="folder" :rules="inputRules"></v-text-field>
+            <v-textarea label="Information" v-model="content" prepend-icon="edit" :rules="inputRules"></v-textarea>
 
-            <v-menu v-model="menu2" :close-on-content-click="false" transition="scale-transition" offset-y>
+            <v-menu v-model="menu2" :close-on-content-click="false" transition="scale-transition" offset-y min-width="290px">
               <template v-slot:activator="{ on }">
                 <v-text-field readonly v-model="date" label="Due date" prepend-icon="event" v-on="on"></v-text-field>
               </template>
@@ -37,12 +37,20 @@ export default {
       title: '',
       content: '',
       menu2: false,
-      date: new Date().toISOString().substr(0,10)
+      date: new Date().toISOString().substr(0,10),
+      inputRules: [
+         v=> (v.length && v.length >= 2) || 'Input must be greater than one character' 
+      ],
+      dateRules: [
+        v => (v.length && v.length >=1) || 'The date field is required'
+      ]
     }
   },
   methods: {
     submit() {
-      console.log(this.title, this.content, this.date)
+      if (this.$refs.form.validate()) {
+        console.log(this.title, this.content, this.date)
+      }
     }
   }
   

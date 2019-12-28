@@ -20,7 +20,8 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import db from '../fb'
+
 
 
 export default {
@@ -30,12 +31,7 @@ export default {
   },
   data() {
     return {
-      projects: [
-        { title: 'Create project portfolio', person: 'Jeff', due: '1st Jan 2020', status: 'ongoing', content: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga provident sit ad, magnam praesentium quia corporis adipisci ullam asperiores? Aliquid consectetur, debitis ex quidem accusantium facilis sint perferendis magnam.' },
-        { title: 'Update resume', person: 'Zoe', due: '5th Jan 2020', status: 'complete', content: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga provident sit ad, magnam praesentium quia corporis adipisci ullam asperiores? Aliquid consectetur, debitis ex quidem accusantium facilis sint perferendis magnam.'},
-        { title: 'Search for a job', person: 'Emily', due: '10th March 2020', status: 'ongoing', content: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga provident sit ad, magnam praesentium quia corporis adipisci ullam asperiores? Aliquid consectetur, debitis ex quidem accusantium facilis sint perferendis magnam.' },
-        { title: 'Devise gameplan for returning home', person: 'Jeff', due: '10th Dec 2019', status: 'overdue', content: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga provident sit ad, magnam praesentium quia corporis adipisci ullam asperiores? Aliquid consectetur, debitis ex quidem accusantium facilis sint perferendis magnam.'  },
-      ]
+      projects: []
     }
   },
   computed: {
@@ -44,7 +40,20 @@ export default {
         return project.person === 'Jeff'
       })
     }
-  }
+  },
+  created () {
+    db.collection('projects').onSnapshot(res => {
+      const changes = res.docChanges();
+      changes.forEach(change => {
+        if (change.type === 'added') {
+          this.projects.push({
+            ...change.doc.data(),
+            id: change.doc.id
+          })
+        }
+      })
+    })
+  },
 
 }
 </script>

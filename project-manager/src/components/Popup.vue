@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import db from '../fb'
+
 export default {
   data() {
     return {
@@ -49,7 +51,17 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        console.log(this.title, this.content, this.date)
+        const project = {
+          title: this.title,
+          content: this.content,
+          date: this.date,
+          person: 'Jeff',
+          status: 'ongoing'
+        }
+
+        db.collection('projects').add(project).then(() => {
+          console.log('added to database')
+        })
       }
     }
   }

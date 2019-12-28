@@ -51,13 +51,20 @@ export default {
     }
   },
   methods: {
+    resetData() {
+      this.title = ''
+      this.content = ''
+      this.data = new Date().toISOString().substr(0,10)
+    },
+
     submit() {
       if (this.$refs.form.validate()) {
-        this.loading = true; 
+        this.loading = true;
+        console.log(typeof this.date) 
         const project = {
           title: this.title,
           content: this.content,
-          date: this.date,
+          due: this.date,
           person: 'Jeff',
           status: 'ongoing'
         }
@@ -67,9 +74,12 @@ export default {
           this.dialogOpen = false;
           this.$emit('projectAdded')
         })
+
+        this.resetData()
+
       }
-    }
-  }
+    },
+  },
   
 }
 </script>

@@ -60,7 +60,7 @@
 
 <script>
 // @ is an alias to /src
-
+import db from '../fb'
 
 export default {
   name: 'dashboard',
@@ -69,10 +69,10 @@ export default {
   data() {
     return {
       projects: [
-        { title: 'Create project portfolio', person: 'Jeff', due: '1st Jan 2020', status: 'ongoing', content: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga provident sit ad, magnam praesentium quia corporis adipisci ullam asperiores? Aliquid consectetur, debitis ex quidem accusantium facilis sint perferendis magnam.' },
-        { title: 'Update resume', person: 'Stacy', due: '5th Jan 2020', status: 'complete', content: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga provident sit ad, magnam praesentium quia corporis adipisci ullam asperiores? Aliquid consectetur, debitis ex quidem accusantium facilis sint perferendis magnam.'},
-        { title: 'Search for a job', person: 'Emily', due: '10th March 2020', status: 'ongoing', content: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga provident sit ad, magnam praesentium quia corporis adipisci ullam asperiores? Aliquid consectetur, debitis ex quidem accusantium facilis sint perferendis magnam.' },
-        { title: 'Devise gameplan for returning home', person: 'Jeff', due: '10th Dec 2019', status: 'overdue', content: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga provident sit ad, magnam praesentium quia corporis adipisci ullam asperiores? Aliquid consectetur, debitis ex quidem accusantium facilis sint perferendis magnam.'  },
+        // { title: 'Create project portfolio', person: 'Jeff', due: '1st Jan 2020', status: 'ongoing', content: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga provident sit ad, magnam praesentium quia corporis adipisci ullam asperiores? Aliquid consectetur, debitis ex quidem accusantium facilis sint perferendis magnam.' },
+        // { title: 'Update resume', person: 'Stacy', due: '5th Jan 2020', status: 'complete', content: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga provident sit ad, magnam praesentium quia corporis adipisci ullam asperiores? Aliquid consectetur, debitis ex quidem accusantium facilis sint perferendis magnam.'},
+        // { title: 'Search for a job', person: 'Emily', due: '10th March 2020', status: 'ongoing', content: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga provident sit ad, magnam praesentium quia corporis adipisci ullam asperiores? Aliquid consectetur, debitis ex quidem accusantium facilis sint perferendis magnam.' },
+        // { title: 'Devise gameplan for returning home', person: 'Jeff', due: '10th Dec 2019', status: 'overdue', content: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga provident sit ad, magnam praesentium quia corporis adipisci ullam asperiores? Aliquid consectetur, debitis ex quidem accusantium facilis sint perferendis magnam.'  },
       ]
     }
   },
@@ -80,6 +80,19 @@ export default {
     sortBy(prop) {
       this.projects.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
     }
+  },
+  created () {
+    db.collection('projects').onSnapshot(res => {
+      const changes = res.docChanges();
+      changes.forEach(change => {
+        if (change.type === 'added') {
+          this.projects.push({
+            ...change.doc.data(),
+            id: change.doc.id
+          })
+        }
+      })
+    })
   },
 }
 </script>

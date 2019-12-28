@@ -44,7 +44,7 @@ export default {
       team: [
         { name: 'Jeff', role: 'Web developer', avatar: '/jeff.JPG' },
         { name: 'Emily', role: 'Content Director', avatar: '/emily.jpeg' },
-        { name: 'Zoe', role: 'Copy Writer', avatar: '/zoe.jpeg' },
+        { name: 'Zoe', role: 'Assistant Marketing Director', avatar: '/zoe.jpeg' },
         { name: 'Terry', role: 'Marketing Director', avatar: '/terry.jpeg' },
         { name: 'Benito', role: 'Production Director', avatar: '/benito.jpg' }
       ],

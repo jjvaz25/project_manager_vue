@@ -42,6 +42,9 @@
               Web Developer
             </p>
           </v-col>
+          <v-col class="mt-3 mb-4">
+            <popup />
+          </v-col>
         </v-row>
         <v-list>
           <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
@@ -63,10 +66,12 @@
 </template>
 
 <script>
+import Popup from './Popup'
  
 export default {
   name: 'NavBar',
   components: {
+    'popup': Popup
   },
   // data: () => ({
   //   drawer: true
